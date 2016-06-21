@@ -1,22 +1,22 @@
 import React, { PropTypes } from 'react';
 
-export default function SampleComponents(props) {
+export default function SampleComponents0(props) {
   return (
     <div>
-      AAAAAAA
+      BBBBBBBBBBB
       {props.title}
     </div>
   );
 }
 
-SampleComponents.propTypes = {
+SampleComponents0.propTypes = {
   src: PropTypes.string,
   alt: PropTypes.string,
   title: PropTypes.string,
   textColor: PropTypes.string,
 };
 
-SampleComponents.defaultProps = {
+SampleComponents0.defaultProps = {
   title: '',
   uri: '',
   alt: '',

@@ -1,1 +1,1 @@
-export const UPDATE_SYSTEM_VERSION = 'UPDATE_SYSTEM_VERSION';
+export const UPDATE = 'UPDATE';

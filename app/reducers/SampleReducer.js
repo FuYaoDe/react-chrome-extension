@@ -2,12 +2,12 @@
 import * as ActionTypes from '../constants/SampleActionTypes';
 const defaultProps = {};
 
-export default function systemInfo(state = defaultProps, action) {
+export default function info(state = defaultProps, action) {
   switch (action.type) {
-    case ActionTypes.UPDATE_SYSTEM_VERSION:
+    case ActionTypes.UPDATE:
       return {
         ...state,
-        systemVersion: action.data,
+        info: action.data,
       };
     default:
       return state;

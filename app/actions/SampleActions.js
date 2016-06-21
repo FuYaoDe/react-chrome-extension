@@ -1,8 +1,9 @@
 import * as types from '../constants/SampleActionTypes';
 
-export function updateSystemVersion(systemVersion) {
+export function updatinfo(data) {
+  console.log("!!!!!!!!!!!!", data, types.UPDATE);
   return {
-    type: types.UPDATE_SYSTEM_VERSION,
-    data: systemVersion,
+    type: types.UPDATE,
+    data: data,
   };
 }

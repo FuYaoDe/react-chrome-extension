@@ -12,6 +12,9 @@
     "48": "img/icon-48.png",
     "128": "img/icon-128.png"
   },
+  "chrome_url_overrides": {
+    "newtab": "popup.html"
+  },
   "web_accessible_resources": [
     "inject.html"
   ],

@@ -8,10 +8,8 @@ import * as action from '../actions/SampleActions';
 const styles = {
   container: {
     display: 'flex',
-    flex: 1,
     justifyContent: 'center',
-    alignContent: 'center',
-    flexFlow: 'column',
+    alignItems: 'center',
   },
 };
 
@@ -27,12 +25,12 @@ class App extends Component {
     this.setState({
       title: this.state.title + 1,
     });
-    this.props.updatinfo(this.state.title);
+    this.props.update(this.state.title);
   }
 
   render() {
     return (
-      <div style={styles.container} onClick={this.onClickHandle}>
+      <div style={styles.container}>
         1231231223
         <SampleComponents title={this.state.title} />
         <SampleComponents0 title={this.state.title} />
@@ -42,7 +40,7 @@ class App extends Component {
 }
 
 App.propTypes = {
-  updatinfo: React.PropTypes.func,
+  update: React.PropTypes.func,
 };
 
 function mapStateToProps(state) {

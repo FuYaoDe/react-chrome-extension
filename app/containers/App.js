@@ -1,15 +1,16 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import SampleComponents from '../components/SampleComponents';
-import SampleComponents0 from '../components/SampleComponents0';
+import Age from '../components/Age';
 import * as action from '../actions/SampleActions';
+import axios from 'axios';
 
 const styles = {
   container: {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: '#193441',
   },
 };
 
@@ -17,23 +18,57 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      title: 0,
+      birthday: '1993-06-25',
+      time: new Date().getTime(),
+      year: 0,
+      day: 999999999,
     };
   }
 
-  onClickHandle = () => {
+  componentWillMount() {
+    const time = new Date(this.state.birthday).getTime();
     this.setState({
-      title: this.state.title + 1,
+      time
     });
-    this.props.update(this.state.title);
+
+    const Animate = setInterval(() => {
+      const now = new Date().getTime();
+      let time = now - this.state.time;
+      time = time / 31556900000;
+      time = time.toFixed(9).toString().split('.');
+      if (this.state.year == time[0]) {
+        clearInterval(Animate);
+        this.genAge();
+        this.setState({
+          year: time[0],
+          day: time[1],
+        });
+      } else {
+        this.setState({
+          year: this.state.year + 1,
+          day: time[1],
+        });
+      }
+    }, 15);
+  }
+
+  genAge = () => {
+    setInterval(() => {
+      const now = new Date().getTime();
+      let time = now - this.state.time;
+      time = time / 31556900000;
+      time = time.toFixed(9).toString().split('.');
+      this.setState({
+        year: time[0],
+        day: time[1],
+      });
+    }, 0);
   }
 
   render() {
     return (
       <div style={styles.container}>
-        1231231223
-        <SampleComponents title={this.state.title} />
-        <SampleComponents0 title={this.state.title} />
+        <Age year={this.state.year} day={this.state.day} />
       </div>
     );
   }

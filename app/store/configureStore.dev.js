@@ -2,6 +2,7 @@ import { applyMiddleware, createStore, compose } from 'redux';
 import rootReducer from '../reducers';
 import thunk from 'redux-thunk';
 import createLogger from 'redux-logger';
+import storage from '../utils/storage';
 
 const logger = createLogger({
   level: 'info',
@@ -10,6 +11,7 @@ const logger = createLogger({
 
 const enhancer = compose(
   applyMiddleware(thunk, logger),
+  storage(),
   window.devToolsExtension ? window.devToolsExtension() : nope => nope
 );
 

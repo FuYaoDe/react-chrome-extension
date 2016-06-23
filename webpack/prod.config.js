@@ -37,7 +37,13 @@ module.exports = {
       loader: 'babel',
       exclude: /node_modules/
     }, {
-      test: /\.css$/,
+      test: /\.global\.css$/,
+      loaders: [
+        'style-loader',
+        'css-loader?sourceMap'
+      ]
+    }, {
+      test: /^((?!\.global).)*\.css$/,
       loaders: [
         'style',
         'css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]',

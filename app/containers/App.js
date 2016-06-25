@@ -39,45 +39,45 @@ class App extends Component {
     };
   }
 
-  // componentWillMount() {
-  //   const time = new Date(this.state.birthday).getTime();
-  //   this.setState({
-  //     time
-  //   });
-  //
-  //   const Animate = setInterval(() => {
-  //     const now = new Date().getTime();
-  //     let time = now - this.state.time;
-  //     time = time / 31556900000;
-  //     time = time.toFixed(9).toString().split('.');
-  //     if (this.state.year == time[0]) {
-  //       clearInterval(Animate);
-  //       this.genAge();
-  //       this.setState({
-  //         year: time[0],
-  //         day: time[1],
-  //       });
-  //     } else {
-  //       this.setState({
-  //         year: this.state.year + 1,
-  //         day: time[1],
-  //       });
-  //     }
-  //   }, 15);
-  // }
-  //
-  // genAge = () => {
-  //   setInterval(() => {
-  //     const now = new Date().getTime();
-  //     let time = now - this.state.time;
-  //     time = time / 31556900000;
-  //     time = time.toFixed(9).toString().split('.');
-  //     this.setState({
-  //       year: time[0],
-  //       day: time[1],
-  //     });
-  //   }, 0);
-  // }
+  componentWillMount() {
+    const time = new Date(this.state.birthday).getTime();
+    this.setState({
+      time
+    });
+
+    const Animate = setInterval(() => {
+      const now = new Date().getTime();
+      let time = now - this.state.time;
+      time = time / 31556900000;
+      time = time.toFixed(9).toString().split('.');
+      if (this.state.year == time[0]) {
+        clearInterval(Animate);
+        this.genAge();
+        this.setState({
+          year: time[0],
+          day: time[1],
+        });
+      } else {
+        this.setState({
+          year: this.state.year + 1,
+          day: time[1],
+        });
+      }
+    }, 15);
+  }
+
+  genAge = () => {
+    setInterval(() => {
+      const now = new Date().getTime();
+      let time = now - this.state.time;
+      time = time / 31556900000;
+      time = time.toFixed(9).toString().split('.');
+      this.setState({
+        year: time[0],
+        day: time[1],
+      });
+    }, 0);
+  }
 
   openOption = () => {
     this.setState({

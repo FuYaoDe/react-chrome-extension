@@ -39,6 +39,32 @@ class Option extends Component {
     this.state = {};
   }
 
+  onBirthdayHandle = (date) => {
+    // chrome.storage.sync.clear();
+    this.updateStorage('birthday', 'date', date.toString());
+  }
+  onBirthdayColorHandle = (value) => {
+    this.updateStorage('birthday', 'color', date.toString());
+  }
+
+  updateStorage = (type, key, value) => {
+    try {
+      chrome.storage.sync.get('config', (data) => {
+        console.log(data);
+        let newData = data.config ? { ...data.config } : {};
+        newData[type] = newData[type] ? { ...newData[type] } : {};
+        newData[type][key] = value;
+        chrome.storage.sync.set({ config: newData }, () => {
+          chrome.storage.sync.get('config', (data) => {
+            console.log('finish!!', data);
+          });
+        });
+      })
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
   render() {
     return (
       <div style={styles.container}>
@@ -46,11 +72,13 @@ class Option extends Component {
           <TabPane tab="年齡" key="1">
             <div style={styles.row}>
               <div style={styles.inputTitle}>生日: </div>
-              <DatePicker format="yyyy/MM/dd" />
+              <DatePicker format="yyyy/MM/dd" onChange={this.onBirthdayHandle} />
             </div>
             <div style={styles.row}>
               <div style={styles.inputTitle}>顏色: </div>
-              <Select defaultValue="black" style={{ width: 160 }}>
+              <Select defaultValue="black" style={{ width: 160 }}
+                onChange={this.onBirthdayColorHandle}
+              >
                 <SelectOption value="black">black</SelectOption>
                 <SelectOption value="pink">pink</SelectOption>
               </Select>

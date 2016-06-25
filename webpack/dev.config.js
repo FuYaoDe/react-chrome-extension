@@ -49,7 +49,7 @@ const baseDevConfig = () => ({
       test: /\.global\.css$/,
       loaders: [
         'style-loader',
-        'css-loader?sourceMap'
+        'css-loader?sourceMap',
       ]
     }, {
       test: /^((?!\.global).)*\.css$/,

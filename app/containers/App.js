@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import * as action from '../actions/SampleActions';
 import Age from '../components/Age';
 import Option from './Option';
-import * as action from '../actions/SampleActions';
 import axios from 'axios';
 import { Popover } from 'antd';
 
@@ -40,6 +40,7 @@ class App extends Component {
   }
 
   componentWillMount() {
+    chrome.storage.sync.clear();
     const time = new Date(this.state.birthday).getTime();
     this.setState({
       time

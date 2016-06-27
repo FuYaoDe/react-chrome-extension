@@ -1,0 +1,1 @@
+export const CONFIG_UPDATE = 'CONFIG_UPDATE';

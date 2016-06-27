@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import * as action from '../actions/SampleActions';
+import * as action from '../actions/ConfigActions';
 import { DatePicker, Tabs, Select, TimePicker, Button } from 'antd';
 const TabPane = Tabs.TabPane;
 const SelectOption = Select.Option;
@@ -41,60 +41,71 @@ class Option extends Component {
 
   onBirthdayHandle = (date) => {
     // chrome.storage.sync.clear();
-    this.updateStorage('birthday', 'date', date.toString());
+    // this.updateStorage('birthday', 'date', date.toString());
+    let newConfig = { ...this.props.config };
+    newConfig.birthday.date = date.toString();
+    this.props.updateConfig(newConfig);
   }
   onBirthdayColorHandle = (value) => {
-    this.updateStorage('birthday', 'color', value);
+    // this.updateStorage('birthday', 'color', value);
+    let newConfig = { ...this.props.config };
+    newConfig.birthday.color = value;
+    this.props.updateConfig(newConfig);
   }
 
   onOffWorkHandle = (date) => {
-    this.updateStorage('offWork', 'time', date.toString());
+    // this.updateStorage('offWork', 'time', date.toString());
+    let newConfig = { ...this.props.config };
+    newConfig.offWork.time = date.toString();
+    this.props.updateConfig(newConfig);
   }
   onOffWorkColorHandle = (value) => {
-    this.updateStorage('offWork', 'color', value);
+    // this.updateStorage('offWork', 'color', value);
+    let newConfig = { ...this.props.config };
+    newConfig.offWork.color = value;
+    this.props.updateConfig(newConfig);
   }
 
   onDueDayDateHandle = (date) => {
-    this.updateStorage('dueDay', 'date', date.toString());
+    // this.updateStorage('dueDay', 'date', date.toString());
+    let newConfig = { ...this.props.config };
+    newConfig.dueDay.date = date.toString();
+    this.props.updateConfig(newConfig);
   }
   onDueDayTimeHandle = (date) => {
-    this.updateStorage('dueDay', 'time', date.toString());
+    // this.updateStorage('dueDay', 'time', date.toString());
+    let newConfig = { ...this.props.config };
+    newConfig.dueDay.time = date.toString();
+    this.props.updateConfig(newConfig);
   }
   onDueDayColorHandle = (value) => {
-    this.updateStorage('dueDay', 'color', value);
+    // this.updateStorage('dueDay', 'color', value);
+    let newConfig = { ...this.props.config };
+    newConfig.dueDay.color = value;
+    this.props.updateConfig(newConfig);
   }
-
-  updateStorage = (type, key, value) => {
-    try {
-      chrome.storage.sync.get('config', (data) => {
-        console.log(data);
-        let newData = data.config ? { ...data.config } : {};
-        newData[type] = newData[type] ? { ...newData[type] } : {};
-        newData[type][key] = value;
-        chrome.storage.sync.set({ config: newData }, () => {
-          chrome.storage.sync.get('config', (data) => {
-            console.log('finish!!', JSON.stringify(data, null, 2));
-          });
-        });
-      })
-    } catch (e) {
-      console.log(e);
-    }
+  onChangeTab = (key) => {
+    let newConfig = { ...this.props.config };
+    newConfig.tabKey = key;
+    this.props.updateConfig(newConfig);
   }
 
   render() {
+    // console.log("!!!!!!!!!!!!!!!!!!", this.props.config);
+    const { birthday, offWork, dueDay, tabKey } = this.props.config;
+    console.log(birthday, offWork, dueDay, tabKey);
     return (
       <div style={styles.container}>
-        <Tabs defaultActiveKey="1">
+        <Tabs defaultActiveKey={tabKey} onChange={this.onChangeTab}>
           <TabPane tab="年齡" key="1">
             <div style={styles.row}>
               <div style={styles.inputTitle}>生日: </div>
-              <DatePicker format="yyyy/MM/dd" onChange={this.onBirthdayHandle} />
+              <DatePicker format="yyyy/MM/dd" defaultValue={new Date(birthday.date)} onChange={this.onBirthdayHandle} />
             </div>
             <div style={styles.row}>
               <div style={styles.inputTitle}>顏色: </div>
               <Select
-                defaultValue="black" style={{ width: 160 }}
+                defaultValue={birthday.color} style={{ width: 160 }}
                 onChange={this.onBirthdayColorHandle}
               >
                 <SelectOption value="black">black</SelectOption>
@@ -108,12 +119,12 @@ class Option extends Component {
           <TabPane tab="下班" key="2">
             <div style={styles.row}>
               <div style={styles.inputTitle}>時間: </div>
-              <TimePicker defaultValue={'06:30'} format="HH:mm" onChange={this.onOffWorkHandle} />
+              <TimePicker defaultValue={offWork.time} format="HH:mm" onChange={this.onOffWorkHandle} />
             </div>
             <div style={styles.row}>
               <div style={styles.inputTitle}>顏色: </div>
               <Select
-                defaultValue="black" style={{ width: 160 }}
+                defaultValue={offWork.color} style={{ width: 160 }}
                 onChange={this.onOffWorkColorHandle}
               >
                 <SelectOption value="black">black</SelectOption>
@@ -127,19 +138,19 @@ class Option extends Component {
           <TabPane tab="due day" key="3">
             <div style={styles.row}>
               <div style={styles.inputTitle}>日期: </div>
-              <DatePicker format="yyyy/MM/dd" onChange={this.onDueDayDateHandle} />
+              <DatePicker format="yyyy/MM/dd" defaultValue={new Date(dueDay.date)} onChange={this.onDueDayDateHandle} />
             </div>
             <div style={styles.row}>
               <div style={styles.inputTitle}>時間: </div>
               <TimePicker
-                defaultValue={'06:30'} format="HH:mm"
+                defaultValue={dueDay.time} format="HH:mm"
                 onChange={this.onDueDayTimeHandle}
               />
             </div>
             <div style={styles.row}>
               <div style={styles.inputTitle}>顏色: </div>
               <Select
-                defaultValue="black" style={{ width: 160 }}
+                defaultValue={dueDay.color} style={{ width: 160 }}
                 onChange={this.onDueDayColorHandle}
               >
                 <SelectOption value="black">black</SelectOption>
@@ -157,12 +168,13 @@ class Option extends Component {
 }
 
 Option.propTypes = {
-  update: React.PropTypes.func,
+  updateConfig: React.PropTypes.func,
 };
 
-function mapStateToProps(state) {
+function mapStateToProps({ config }) {
+  console.log(config);
   return {
-    info: state.info,
+    config,
   };
 }
 
